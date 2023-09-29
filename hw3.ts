@@ -90,8 +90,6 @@ export function splitArrayOnce<T>(arr: T[]): [T[], T[]] {
   return [left, right];
 }
 
-console.dir(splitArrayOnce(['hello', 'world']));
-
 /* ----------------------------------------------------- **
 ### Problem 1b (10 pts):
 
@@ -255,7 +253,24 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function splitArray<T>(arr: T[]): NestedArray<T> {
-  throw Error('TODO');
+  // If array is empty, return a leaf node.
+  if (arr.length === 0) {
+    return mkNALeaf();
+  }
+
+  // Split the array.
+  const [arr1, arr2] = splitArrayOnce(arr);
+
+  // Extract the value for the current node and the rest of the array for the left child.
+  const nodeValue = arr1[arr1.length - 1];
+  const leftArray = arr1.slice(0, arr1.length - 1); // everything but the last element
+
+  // Recursively build the left and right children.
+  const leftChild = splitArray(leftArray);
+  const rightChild = splitArray(arr2);
+
+  // Construct the node using the provided utility function.
+  return mkNANode(nodeValue, leftChild, rightChild);
 }
 
 /* ==========================================================================  **
