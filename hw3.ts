@@ -37,21 +37,18 @@ https://docs.google.com/document/d/1nuaoRZ7vx8DECkz1P_j_iydaAw3xMtbJSQ4LBN_XenM/
 
 ** ============================================================================ */
 
-
 /* ==========================================================================  **
 ## AI Copilot
 ** ============================================================================ */
 
 // If you used any resources, please list them here
 export const AI_COPILOT_HISTORY = [
-    "https://chat.openai.com/c/", // TODO: please paste the link to your AI CoPilot history here
+  'https://chat.openai.com/c/', // TODO: please paste the link to your AI CoPilot history here
 ];
-
 
 /* ==========================================================================  **
 ## Problem 1: Towards recursive functions with arrays (20 pts)
 ** ============================================================================ */
-
 
 /* ----------------------------------------------------- **
 ### Problem 1a (10 pts):
@@ -87,9 +84,8 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function splitArrayOnce<T>(arr: T[]): [T[], T[]] {
-    throw Error("TODO");
+  throw Error('TODO');
 }
-
 
 /* ----------------------------------------------------- **
 ### Problem 1b (10 pts):
@@ -128,9 +124,8 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function splitArrayTwice<T>(arr: T[]): [[T[], T[]], [T[], T[]]] {
-    throw Error("TODO");
+  throw Error('TODO');
 }
-
 
 /* ==========================================================================  **
 ## Problem 2: Recursive functions with arrays (25 pts)
@@ -143,86 +138,56 @@ hold elements of type `T`.
 ** ============================================================================ */
 
 export type NestedArray<T> =
-    {
-        tag: "LEAF"
+  | {
+      tag: 'LEAF';
     }
-|   {
-        tag: "NODE",
-        contents: T,
-        left: NestedArray<T>,
-        right: NestedArray<T>
+  | {
+      tag: 'NODE';
+      contents: T;
+      left: NestedArray<T>;
+      right: NestedArray<T>;
     };
 
 export function mkNALeaf<T>(): NestedArray<T> {
-    return {
-        tag: "LEAF"
-    };
+  return {
+    tag: 'LEAF',
+  };
 }
 
-export function mkNANode<T>(contents: T, left: NestedArray<T>, right: NestedArray<T>): NestedArray<T> {
-    return {
-        tag: "NODE",
-        contents: contents, 
-        left: left,
-        right: right
-    };
+export function mkNANode<T>(
+  contents: T,
+  left: NestedArray<T>,
+  right: NestedArray<T>
+): NestedArray<T> {
+  return {
+    tag: 'NODE',
+    contents: contents,
+    left: left,
+    right: right,
+  };
 }
 
-export const tr1 =
-    mkNALeaf();
+export const tr1 = mkNALeaf();
 
-export const tr2 = 
-    mkNANode(
-        1,
-        mkNALeaf(),
-        mkNALeaf()
-    );
+export const tr2 = mkNANode(1, mkNALeaf(), mkNALeaf());
 
-export const tr3 =
-    mkNANode(
-        "hello",
-        mkNALeaf(),
-        mkNANode(
-            "world",
-            mkNALeaf(),
-            mkNALeaf()
-        )
-    );
+export const tr3 = mkNANode(
+  'hello',
+  mkNALeaf(),
+  mkNANode('world', mkNALeaf(), mkNALeaf())
+);
 
-export const tr4 =
-    mkNANode(
-        'is',
-        mkNANode(
-            'csc600',
-            mkNALeaf(),
-            mkNALeaf()
-        ),
-        mkNANode(
-            'fun',
-            mkNALeaf(),
-            mkNALeaf()
-        )
-    )
+export const tr4 = mkNANode(
+  'is',
+  mkNANode('csc600', mkNALeaf(), mkNALeaf()),
+  mkNANode('fun', mkNALeaf(), mkNALeaf())
+);
 
-export const tr5 =
-    mkNANode(
-        2,
-        mkNANode(
-            3,
-            mkNALeaf(),
-            mkNALeaf()
-        ),
-        mkNANode(
-            1,
-            mkNALeaf(),
-            mkNANode(
-                4,
-                mkNALeaf(),
-                mkNALeaf()
-            )
-        )
-    );
-
+export const tr5 = mkNANode(
+  2,
+  mkNANode(3, mkNALeaf(), mkNALeaf()),
+  mkNANode(1, mkNALeaf(), mkNANode(4, mkNALeaf(), mkNALeaf()))
+);
 
 /* ----------------------------------------------------- **
 Write a function that builds a data structure of type NestedArray<T>
@@ -284,10 +249,8 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function splitArray<T>(arr: T[]): NestedArray<T> {
-    throw Error("TODO");
+  throw Error('TODO');
 }
-
-
 
 /* ==========================================================================  **
 ## Problem 3: Recursive functions with trees (55 pts)
@@ -334,86 +297,59 @@ Example 5 (ntr5):
 
 ** ============================================================================ */
 
-export type NaryTree<T> = 
-    {
-        tag: "LEAF",                     // no children
+export type NaryTree<T> =
+  | {
+      tag: 'LEAF'; // no children
     }
-|   {
-        tag: "NODE",
-        contents: T,
-        firstChild: NaryTree<T>,         // contains the first child
-        restChildren: NaryTree<T>[]      // contains children 2 through ...
-    }
-
-export function mkNaryLeaf<T>(): NaryTree<T>{
-    return {
-        tag: "LEAF"
+  | {
+      tag: 'NODE';
+      contents: T;
+      firstChild: NaryTree<T>; // contains the first child
+      restChildren: NaryTree<T>[]; // contains children 2 through ...
     };
+
+export function mkNaryLeaf<T>(): NaryTree<T> {
+  return {
+    tag: 'LEAF',
+  };
 }
 
-export function mkNaryNode<T>(contents: T, children: NaryTree<T>[]): NaryTree<T>{
-    if (children.length === 0) {
-        return {
-            tag: "NODE",
-            contents: contents,
-            firstChild: mkNaryLeaf(),
-            restChildren: []
-        }
-    } else {
-        return {
-            tag: "NODE",
-            contents: contents,
-            firstChild: children[0],
-            restChildren: children.slice(1)
-        };
-    }
+export function mkNaryNode<T>(
+  contents: T,
+  children: NaryTree<T>[]
+): NaryTree<T> {
+  if (children.length === 0) {
+    return {
+      tag: 'NODE',
+      contents: contents,
+      firstChild: mkNaryLeaf(),
+      restChildren: [],
+    };
+  } else {
+    return {
+      tag: 'NODE',
+      contents: contents,
+      firstChild: children[0],
+      restChildren: children.slice(1),
+    };
+  }
 }
 
-const ntr1 : NaryTree<number> =
-    mkNaryLeaf();
+const ntr1: NaryTree<number> = mkNaryLeaf();
 
-const ntr2 =
-    mkNaryNode(
-        1,
-        []
-    );
+const ntr2 = mkNaryNode(1, []);
 
-const ntr3 =
-    mkNaryNode(
-        1,
-        [
-            mkNaryNode(2, [])
-        ]
-    );
+const ntr3 = mkNaryNode(1, [mkNaryNode(2, [])]);
 
-const ntr4 =
-    mkNaryNode(
-        1,
-        [
-            mkNaryNode(2, []),
-            mkNaryNode(3, [])
-        ]
-    );
+const ntr4 = mkNaryNode(1, [mkNaryNode(2, []), mkNaryNode(3, [])]);
 
-const ntr5 =
-    mkNaryNode(
-        1,
-        [
-            mkNaryNode(
-                2,
-                [
-                    mkNaryNode(3, []),
-                    mkNaryNode(4, []),
-                    mkNaryNode(
-                        5, 
-                        [
-                            mkNaryNode(6, []),
-                        ]),
-                ]
-            )
-        ]
-    );
-
+const ntr5 = mkNaryNode(1, [
+  mkNaryNode(2, [
+    mkNaryNode(3, []),
+    mkNaryNode(4, []),
+    mkNaryNode(5, [mkNaryNode(6, [])]),
+  ]),
+]);
 
 /* ----------------------------------------------------- **
 ### Problem 3a (15 pts):
@@ -441,9 +377,8 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function heightNaryTree<T>(naTr: NaryTree<T>): number {
-    throw Error("TODO");
+  throw Error('TODO');
 }
-
 
 /* ----------------------------------------------------- **
 ### Problem 3b (20 pts):
@@ -497,10 +432,12 @@ Example 5:
             * 
 ** ----------------------------------------------------- */
 
-export function mapNaryTree<T, U>(naTr: NaryTree<T>, f: (arg: T) => U): NaryTree<U> {
-    throw Error("TODO");
+export function mapNaryTree<T, U>(
+  naTr: NaryTree<T>,
+  f: (arg: T) => U
+): NaryTree<U> {
+  throw Error('TODO');
 }
-
 
 /* ----------------------------------------------------- **
 ### Problem 3c (20 pts):
@@ -566,5 +503,5 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function nestedArrayToNaryTree<T>(na: NestedArray<T>): NaryTree<T> {
-    throw Error("TODO");
+  throw Error('TODO');
 }
