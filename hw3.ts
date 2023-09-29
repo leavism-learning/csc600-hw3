@@ -84,8 +84,13 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function splitArrayOnce<T>(arr: T[]): [T[], T[]] {
-  throw Error('TODO');
+  const mid = Math.floor(arr.length / 2) + (arr.length % 2);
+  const left = arr.slice(0, mid);
+  const right = arr.slice(mid);
+  return [left, right];
 }
+
+console.dir(splitArrayOnce(['hello', 'world']));
 
 /* ----------------------------------------------------- **
 ### Problem 1b (10 pts):
