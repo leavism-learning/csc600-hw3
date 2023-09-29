@@ -96,7 +96,7 @@ console.dir(splitArrayOnce(['hello', 'world']));
 ### Problem 1b (10 pts):
 
 Write a function that splits an array into two "halves" and then
-splits each half respectively again into two "havles". Thus you will
+splits each half respectively again into two "halves". Thus you will
 end up with 4 "quarters" at the end. As before, if there are an odd
 number of elements, put the extra element in the left half.
 
@@ -129,7 +129,8 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function splitArrayTwice<T>(arr: T[]): [[T[], T[]], [T[], T[]]] {
-  throw Error('TODO');
+  const firstSplit = splitArrayOnce(arr);
+  return [splitArrayOnce(firstSplit[0]), splitArrayOnce(firstSplit[1])];
 }
 
 /* ==========================================================================  **
