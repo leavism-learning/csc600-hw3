@@ -253,15 +253,15 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function splitArray<T>(arr: T[]): NestedArray<T> {
-  // If array is empty, return a leaf node.
+  // If array is empty, return a leaf node
   if (arr.length === 0) {
     return mkNALeaf();
   }
 
-  // Split the array.
+  // Split the array
   const [arr1, arr2] = splitArrayOnce(arr);
 
-  // Extract the value for the current node and the rest of the array for the left child.
+  // Extract the value of current node and the rest of the array for the left child
   const nodeValue = arr1[arr1.length - 1];
   const leftArray = arr1.slice(0, arr1.length - 1); // everything but the last element
 
@@ -269,7 +269,6 @@ export function splitArray<T>(arr: T[]): NestedArray<T> {
   const leftChild = splitArray(leftArray);
   const rightChild = splitArray(arr2);
 
-  // Construct the node using the provided utility function.
   return mkNANode(nodeValue, leftChild, rightChild);
 }
 
@@ -356,15 +355,15 @@ export function mkNaryNode<T>(
   }
 }
 
-const ntr1: NaryTree<number> = mkNaryLeaf();
+export const ntr1: NaryTree<number> = mkNaryLeaf();
 
-const ntr2 = mkNaryNode(1, []);
+export const ntr2 = mkNaryNode(1, []);
 
-const ntr3 = mkNaryNode(1, [mkNaryNode(2, [])]);
+export const ntr3 = mkNaryNode(1, [mkNaryNode(2, [])]);
 
-const ntr4 = mkNaryNode(1, [mkNaryNode(2, []), mkNaryNode(3, [])]);
+export const ntr4 = mkNaryNode(1, [mkNaryNode(2, []), mkNaryNode(3, [])]);
 
-const ntr5 = mkNaryNode(1, [
+export const ntr5 = mkNaryNode(1, [
   mkNaryNode(2, [
     mkNaryNode(3, []),
     mkNaryNode(4, []),
@@ -398,7 +397,20 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function heightNaryTree<T>(naTr: NaryTree<T>): number {
-  throw Error('TODO');
+  if (naTr.tag === 'LEAF') return 0;
+  // Height of the first child
+  let maxChildHeight = heightNaryTree(naTr.firstChild);
+
+  // Sum height of the rest of the children
+  for (let child of naTr.restChildren) {
+    const childHeight = heightNaryTree(child);
+    if (childHeight > maxChildHeight) {
+      maxChildHeight = childHeight;
+    }
+  }
+
+  // Add 1 to account for the current node
+  return 1 + maxChildHeight;
 }
 
 /* ----------------------------------------------------- **
