@@ -469,7 +469,14 @@ export function mapNaryTree<T, U>(
   naTr: NaryTree<T>,
   f: (arg: T) => U
 ): NaryTree<U> {
-  throw Error('TODO');
+  if (naTr.tag === 'LEAF') return mkNaryLeaf();
+
+  const newContents = f(naTr.contents);
+  const newFirstChild = mapNaryTree(naTr.firstChild, f);
+  const newRestChildren = naTr.restChildren.map((child) =>
+    mapNaryTree(child, f)
+  );
+  return mkNaryNode(newContents, [newFirstChild, ...newRestChildren]);
 }
 
 /* ----------------------------------------------------- **
