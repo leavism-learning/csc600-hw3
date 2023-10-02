@@ -543,5 +543,12 @@ Example 5:
 ** ----------------------------------------------------- */
 
 export function nestedArrayToNaryTree<T>(na: NestedArray<T>): NaryTree<T> {
-  throw Error('TODO');
+  if (na.tag === 'LEAF') return mkNaryLeaf();
+
+  // Convert left child to firstChild for NaryTree
+  const firstChild = nestedArrayToNaryTree(na.left);
+
+  // Convert right child and place it as the only element in restChildren
+  const restChild = nestedArrayToNaryTree(na.right);
+  return mkNaryNode(na.contents, [firstChild, restChild]);
 }
